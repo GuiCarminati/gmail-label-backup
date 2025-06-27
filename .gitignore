@@ -1,0 +1,6 @@
+node_modules
+serviceAccountKey*
+log_*
+desktop.ini
+EnableServiceAccount.lnk
+REMINDERS.md
