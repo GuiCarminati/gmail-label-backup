@@ -69,59 +69,10 @@ async function manageGmailLabels(userEmail, log, jsonkey_file_path) {
 /////////////
   // // Create the parent label if it doesn't exist
   const parentLabelName = userEmail; // Use the user's email as the parent label name
-  // let parentLabelId;
-
   // // Check if the parent label already exists
   const listRes = await gmail.users.labels.list({ userId: 'me' });
   const labels = listRes.data.labels;
 
-  // const parentLabel = labels.find(label => label.name === parentLabelName);
-  // if (parentLabel) {
-  //   parentLabelId = parentLabel.id;
-  // } else {
-  //   const createRes = await gmail.users.labels.create({
-  //     userId: 'me',
-  //     resource: { name: parentLabelName },
-  //   });
-  //   parentLabelId = createRes.data.id;
-  // }
-
-  // log(`Using Parent Label: ${parentLabelName}`);
-
-  // // List of system labels to avoid modifying
-  // const systemLabels = [
-  //   'INBOX', 'SENT', 'DRAFT', 'CHAT', 'SPAM', 'TRASH',
-  //   'IMPORTANT', 'CATEGORY_PERSONAL', 'CATEGORY_SOCIAL',
-  //   'CATEGORY_PROMOTIONS', 'CATEGORY_UPDATES', 'CATEGORY_FORUMS', 'UNREAD', 'STARRED',
-  // ];
-
-  // // Rename existing labels and nest them under the parent label
-  // for (const label of labels) {
-  //   if (
-  //     !label.name.startsWith(`${parentLabelName}/`) &&
-  //     label.name !== parentLabelName && // Ensure we're not renaming the parent label
-  //     !systemLabels.includes(label.name) // Ensure we're not renaming system labels
-  //   ) {
-  //     const newLabelName = `${parentLabelName}/${label.name}`;
-
-  //     // Check if the new label name already exists
-  //     const existingLabel = labels.find(existingLabel => existingLabel.name === newLabelName);
-  //     if (existingLabel) {
-  //       log(`Skipped renaming ${label.name}: the label "${newLabelName}" already exists.`);
-  //       continue; // Skip renaming this label if it already exists
-  //     }
-
-  //     await gmail.users.labels.update({
-  //       userId: 'me',
-  //       id: label.id,
-  //       resource: { name: newLabelName },
-  //     });
-  //     log(`Renamed label: ${label.name} to ${newLabelName}`);
-  //   } else {
-  //     log(`Skipped renaming system label: ${label.name}`);
-  //   }
-  // }
-////////////
   await renameAndNestLabels(userEmail,log,jsonkey_file_path);
   // Create and apply the new label for all emails that have no labels
   const newLabelName = `${parentLabelName}/_all`;
