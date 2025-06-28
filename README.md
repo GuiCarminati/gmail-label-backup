@@ -6,6 +6,11 @@ This project provides tools to automate Gmail label management for Google Worksp
 - **Apply custom labels to all emails and sent emails**
 - **Process multiple users in batch with logging and progress tracking**
 
+The purpose of these scripts is to nest all emails and labels under a single parent label, so that they're organized when migrating the user's mailbox into another user's mailbox. After execution, you can expect the folowing behaviour:
+- All received email be labeled with "useremail@companydomain.com/_all"
+- All email in the sent folder will be labeled with "useremail@companydomain.com/_sent"
+- All (non-system) labels will be nested under the parent label "useremail@companydomain.com" (eg. "useremail@companydomain.com/custom_label")
+
 ---
 
 ## Features
